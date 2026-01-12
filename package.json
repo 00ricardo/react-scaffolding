@@ -1,0 +1,17 @@
+{
+  "name": "scaffolding",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "bin": {
+    "create-amsosram-react-template": "./bin/cli.js"
+  },
+  "scripts": {},
+  "author": "David Briceño",
+  "license": "MIT",
+  "description": "Scaffolding example",
+  "dependencies": {
+    "figlet": "^1.9.4",
+    "prompts": "^2.4.2"
+  }
+}
