@@ -25,7 +25,7 @@ export const log_ascii_art_company = () => {
 };
 
 export const installDependencies = (projectPath, dependencies = []) => {
-  console.log('Installing dependencies...');
+  console.log('📦 Installing dependencies...');
   const dependenciesList = dependencies.join(' ');
   execSync(`npm install --legacy-peer-deps ${dependenciesList}`, {
     cwd: projectPath,

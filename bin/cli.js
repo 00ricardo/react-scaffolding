@@ -33,7 +33,7 @@ const runCLI = async () => {
   const { template } = await prompts({
     type: 'select',
     name: 'template',
-    message: 'Choose a template',
+    message: '🎨 Choose a template',
     choices: [
       { title: 'Basic', value: 'basic' },
       { title: 'Advanced', value: 'advanced' },
@@ -56,7 +56,7 @@ const runCLI = async () => {
   const { installDeps } = await prompts({
     type: 'confirm',
     name: 'installDeps',
-    message: 'Install dependencies now?',
+    message: '📦 Install dependencies now?',
     initial: true,
   });
 
