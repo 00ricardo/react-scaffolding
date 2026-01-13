@@ -1,9 +1,6 @@
 #!/usr/bin/env node
 import prompts from 'prompts';
-import { execSync } from 'node:child_process';
-import { writeFileSync, mkdirSync } from 'node:fs';
 import { join } from 'node:path';
-import figlet from 'figlet';
 import {
   RED,
   GREEN,
@@ -14,11 +11,17 @@ import {
   WHITE,
   GRAY,
   ORANGE,
+  RESET_COLOR,
 } from './colors.js';
+import {
+  log_ascii_art_company,
+  installDependencies,
+  cretaeFolder,
+  createFile,
+} from './utils.js';
 
-const run = async () => {
-  const ASCII = figlet.textSync('ams osram', { font: 'Standard' });
-  console.log(ASCII);
+const runCLI = async () => {
+  log_ascii_art_company();
   console.log('Hi Valerio, welcome to your Scaffolding Demo!');
 
   const { projectName } = await prompts({
@@ -37,17 +40,19 @@ const run = async () => {
     ],
   });
 
-  // Create folder & simple file
-  const projectPath = join(process.cwd(), projectName);
-  mkdirSync(projectPath);
-  writeFileSync(
-    join(projectPath, 'index.js'),
+  // ! Create folder for the project
+  const rootPath = process.cwd();
+  cretaeFolder(rootPath, projectName);
+
+  // ! Create file inside the folder
+  const projectPath = join(rootPath, projectName);
+  createFile(
+    projectPath,
+    'index.js',
     `// This is a comment in index.js!\n// Template: ${template}\nconsole.log('Hello!');`
   );
 
-  console.log(`Project created in ${projectPath}`);
-
-  // Optional: install dependencies
+  // ! Optional: install dependencies
   const { installDeps } = await prompts({
     type: 'confirm',
     name: 'installDeps',
@@ -55,13 +60,10 @@ const run = async () => {
     initial: true,
   });
 
-  if (installDeps) {
-    execSync('npm install --legacy-peer-deps', {
-      cwd: projectPath,
-      stdio: 'inherit',
-    });
-  }
+  // ! Install dependencies if user agreed
+  if (installDeps) installDependencies(projectPath);
 
+  // ! Demonstrate colors and emojis
   console.log(RED, 'This is red');
   console.log(GREEN, 'This is green');
   console.log(YELLOW, 'This is yellow');
@@ -71,8 +73,12 @@ const run = async () => {
   console.log(WHITE, 'This is white');
   console.log(GRAY, 'This is gray');
   console.log(ORANGE, 'This is orange');
+
+  // ! Mandatory reset at the end to avoid color bleeding in terminal
+  console.log(RESET_COLOR);
+
   console.log('🎉 Party Emoji!');
   console.log('⚠️ Warning Emoji');
 };
 
-run();
+runCLI();

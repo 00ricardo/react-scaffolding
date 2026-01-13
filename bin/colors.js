@@ -1,9 +1,12 @@
-export const RED = '\x1b[31m%s\x1b[0m';
-export const GREEN = '\x1b[32m%s\x1b[0m';
-export const YELLOW = '\x1b[33m%s\x1b[0m';
-export const BLUE = '\x1b[34m%s\x1b[0m';
-export const MAGENTA = '\x1b[35m%s\x1b[0m';
-export const CYAN = '\x1b[36m%s\x1b[0m';
-export const WHITE = '\x1b[37m%s\x1b[0m';
-export const GRAY = '\x1b[90m%s\x1b[0m';
-export const ORANGE = '\x1b[38;5;208m%s\x1b[0m';
+// ANSI escape codes (without %s)
+export const RED = '\x1b[31m';
+export const GREEN = '\x1b[32m';
+export const YELLOW = '\x1b[33m';
+export const BLUE = '\x1b[34m';
+export const MAGENTA = '\x1b[35m';
+export const CYAN = '\x1b[36m';
+export const WHITE = '\x1b[37m';
+export const GRAY = '\x1b[90m';
+export const ORANGE = '\x1b[38;5;208m';
+// ANSI reset code
+export const RESET_COLOR = '\x1b[0m';
