@@ -2,7 +2,7 @@ import figlet from 'figlet';
 import { GRAY, ORANGE, RESET_COLOR } from './colors.js';
 import { join } from 'node:path';
 import { execSync } from 'node:child_process';
-import { writeFileSync, mkdirSync } from 'node:fs';
+import { writeFileSync, mkdirSync, existsSync } from 'node:fs';
 
 export const log_ascii_art_company = () => {
   const ams = figlet.textSync('ams', { font: 'Standard' });
@@ -16,7 +16,7 @@ export const log_ascii_art_company = () => {
       (line, i) =>
         `${GRAY}${line}${RESET_COLOR} ${ORANGE}${
           osramLines[i] || ''
-        }${RESET_COLOR}`
+        }${RESET_COLOR}`,
     )
     .join('\n');
 
@@ -27,15 +27,15 @@ export const log_ascii_art_company = () => {
 export const installDependencies = (projectPath, dependencies = []) => {
   console.log('📦 Installing dependencies...');
   const dependenciesList = dependencies.join(' ');
-  execSync(`npm install --legacy-peer-deps ${dependenciesList}`, {
+  /*execSync(`npm install --legacy-peer-deps ${dependenciesList}`, {
     cwd: projectPath,
     stdio: 'inherit',
-  });
+  });*/
 };
 
-export const cretaeFolder = (path, folder_name) => {
+export const createFolder = (path, folder_name) => {
   const full_path = join(path, folder_name);
-  mkdirSync(full_path);
+  if (!existsSync(full_path)) mkdirSync(full_path, { recursive: true });
 };
 
 export const createFile = (path, file_name, file_content) => {

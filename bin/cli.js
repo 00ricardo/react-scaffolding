@@ -16,49 +16,49 @@ import {
 import {
   log_ascii_art_company,
   installDependencies,
-  cretaeFolder,
+  createFolder,
   createFile,
 } from './utils.js';
+import {
+  projectNamePrompt,
+  useMUIPrompt,
+  installDependenciesPrompt,
+} from './prompts.js';
 
+import applicationLevelFiles from './skeleton/appFiles.js';
 const runCLI = async () => {
   log_ascii_art_company();
-  console.log('Hi Valerio, welcome to your Scaffolding Demo!');
 
-  const { projectName } = await prompts({
-    type: 'text',
-    name: 'projectName',
-    message: 'Project name:',
-  });
+  const { projectName, useMUI } = await prompts([
+    projectNamePrompt,
+    useMUIPrompt,
+  ]);
 
-  const { template } = await prompts({
-    type: 'select',
-    name: 'template',
-    message: '🎨 Choose a template',
-    choices: [
-      { title: 'Basic', value: 'basic' },
-      { title: 'Advanced', value: 'advanced' },
-    ],
-  });
-
-  // ! Create folder for the project
   const rootPath = process.cwd();
-  cretaeFolder(rootPath, projectName);
-
-  // ! Create file inside the folder
   const projectPath = join(rootPath, projectName);
-  createFile(
-    projectPath,
-    'index.js',
-    `// This is a comment in index.js!\n// Template: ${template}\nconsole.log('Hello!');`
-  );
+  // ! Create folder for the project
+
+  createFolder(rootPath, projectName);
+
+  // ! Create application level folders and files
+  const appFolders = applicationLevelFiles.folders;
+  for (let folx = 0; folx < appFolders.length; folx++) {
+    const { name: folderName, files } = appFolders[folx];
+    if (folderName !== '') createFolder(projectPath, folderName);
+    for (let filx = 0; filx < files.length; filx++) {
+      const { name: fileName, content: fileContent } = files[filx];
+      createFile(
+        join(projectPath, folderName),
+        fileName,
+        typeof fileContent === 'function'
+          ? fileContent(projectName, useMUI)
+          : fileContent,
+      );
+    }
+  }
 
   // ! Optional: install dependencies
-  const { installDeps } = await prompts({
-    type: 'confirm',
-    name: 'installDeps',
-    message: '📦 Install dependencies now?',
-    initial: true,
-  });
+  const { installDeps } = await prompts(installDependenciesPrompt);
 
   // ! Install dependencies if user agreed
   if (installDeps) installDependencies(projectPath);
