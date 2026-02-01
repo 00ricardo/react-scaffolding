@@ -18,14 +18,13 @@ import {
   installDependencies,
   createFolder,
   createFile,
+  copyFolder,
 } from './utils.js';
 import {
   projectNamePrompt,
   useMUIPrompt,
   installDependenciesPrompt,
 } from './prompts.js';
-
-import applicationLevelFiles from './skeleton/appFiles.js';
 const runCLI = async () => {
   log_ascii_art_company();
 
@@ -36,35 +35,26 @@ const runCLI = async () => {
 
   const rootPath = process.cwd();
   const projectPath = join(rootPath, projectName);
-  // ! Create folder for the project
-
-  createFolder(rootPath, projectName);
-
-  // ! Create application level folders and files
-  const appFolders = applicationLevelFiles.folders;
-  for (let folx = 0; folx < appFolders.length; folx++) {
-    const { name: folderName, files } = appFolders[folx];
-    if (folderName !== '') createFolder(projectPath, folderName);
-    for (let filx = 0; filx < files.length; filx++) {
-      const { name: fileName, content: fileContent } = files[filx];
-      createFile(
-        join(projectPath, folderName),
-        fileName,
-        typeof fileContent === 'function'
-          ? fileContent(projectName, useMUI)
-          : fileContent,
-      );
-    }
-  }
 
   // ! Optional: install dependencies
   const { installDeps } = await prompts(installDependenciesPrompt);
-
   // ! Install dependencies if user agreed
   if (installDeps) installDependencies(projectPath);
 
+  // ! Create folder for the project
+  createFolder(rootPath, projectName);
+  const skeletonPath = join(rootPath, 'bin', 'skeleton');
+  const props = {
+    projectName,
+    useMUI,
+    scaffVersion: '1.0.0',
+    author: 'Ricardo',
+    authorEmail: 'ealoticopve@gmail.com',
+  };
+  copyFolder(skeletonPath, projectPath, props);
+
   // ! Demonstrate colors and emojis
-  console.log(RED, 'This is red');
+  /*console.log(RED, 'This is red');
   console.log(GREEN, 'This is green');
   console.log(YELLOW, 'This is yellow');
   console.log(BLUE, 'This is blue');
@@ -78,7 +68,7 @@ const runCLI = async () => {
   console.log(RESET_COLOR);
 
   console.log('🎉 Party Emoji!');
-  console.log('⚠️ Warning Emoji');
+  console.log('⚠️ Warning Emoji');*/
 };
 
 runCLI();
