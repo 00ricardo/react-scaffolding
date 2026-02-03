@@ -1,9 +1,9 @@
 import figlet from 'figlet';
 import { GRAY, ORANGE, RESET_COLOR } from './colors.js';
 import { join } from 'node:path';
-import { execSync } from 'node:child_process';
-import { writeFileSync, mkdirSync, existsSync, readFileSync } from 'node:fs';
-import { readdir, stat, mkdir, readFile, writeFile } from 'fs/promises';
+import { writeFileSync, mkdirSync } from 'node:fs';
+import fs from 'node:fs';
+
 export const log_ascii_art_company = () => {
   const ams = figlet.textSync('ams', { font: 'Standard' });
   const osram = figlet.textSync('OSRAM', { font: 'Standard' });
@@ -24,15 +24,6 @@ export const log_ascii_art_company = () => {
   console.log(RESET_COLOR);
 };
 
-export const installDependencies = (projectPath, dependencies = []) => {
-  console.log('📦 Installing dependencies...');
-  const dependenciesList = dependencies.join(' ');
-  /*execSync(`npm install --legacy-peer-deps ${dependenciesList}`, {
-    cwd: projectPath,
-    stdio: 'inherit',
-  });*/
-};
-
 export const createFolder = (path, folder_name) => {
   const full_path = join(path, folder_name);
   if (!existsSync(full_path)) mkdirSync(full_path, { recursive: true });
@@ -43,31 +34,31 @@ export const createFile = (path, file_name, file_content) => {
   writeFileSync(full_path, file_content);
 };
 
-/*export const copyFolder = async (sourceFolder, destinationPath) => {
-  await cp(sourceFolder, destinationPath, { recursive: true });
-};*/
-
-export const copyFolder = async (sourceFolder, destinationPath, props) => {
-  const { projectName, author, authorEmail, scaffVersion } = props;
-  await mkdir(destinationPath, { recursive: true });
-
-  const entries = await readdir(sourceFolder);
+export function installSkeleton(src, dest, props) {
+  const { projectName, useMui, depMui, version, author, authorEmail } = props
+  
+  //Read every file founded
+  const entries = fs.readdirSync(src, { withFileTypes: true });
 
   for (const entry of entries) {
-    const srcPath = join(sourceFolder, entry);
-    const destPath = join(destinationPath, entry);
-    const info = await stat(srcPath);
+    const srcPath = join(src, entry.name);
+    const destPath = join(dest, entry.name);
 
-    if (info.isDirectory()) {
-      await copyFolder(srcPath, destPath, props);
+    if (!useMui && entry.isDirectory() && entry.name === 'MUITheme') {
+      continue;
+    }
+    
+    if (entry.isDirectory()) {
+      createFolder(dest, entry.name);
+      installSkeleton(srcPath, destPath, props);
     } else {
-      let content = await readFile(srcPath, 'utf8');
-      content = content.replace('##PROJECT_NAME##', projectName);
-      content = content.replace('##CREATED_DATE##', new Date().toUTCString());
-      content = content.replace('##AUTHOR_NAME##', author);
-      content = content.replace('##AUTHOR_EMAIL##', authorEmail);
-      content = content.replace('##VERSION##', scaffVersion);
-      await writeFile(destPath, content);
+      let content = fs.readFileSync(srcPath, 'utf-8');
+      content = content.replace('##projectName##', projectName);
+      content = content.replace('##useMui##', useMui ? depMui : '');
+      content = content.replace('##version##', version);
+      content = content.replace('##author##', author);
+      content = content.replace('##authorEmail##', authorEmail);
+      createFile(dest, entry.name, content);
     }
   }
-};
+}

@@ -1,74 +1,54 @@
 #!/usr/bin/env node
 import prompts from 'prompts';
 import { join } from 'node:path';
-import {
-  RED,
-  GREEN,
-  YELLOW,
-  BLUE,
-  MAGENTA,
-  CYAN,
-  WHITE,
-  GRAY,
-  ORANGE,
-  RESET_COLOR,
-} from './colors.js';
-import {
-  log_ascii_art_company,
-  installDependencies,
-  createFolder,
-  createFile,
-  copyFolder,
+import { 
+  log_ascii_art_company, 
+  createFolder, 
+  installSkeleton 
 } from './utils.js';
-import {
-  projectNamePrompt,
-  useMUIPrompt,
-  installDependenciesPrompt,
-} from './prompts.js';
+
 const runCLI = async () => {
   log_ascii_art_company();
+  console.log('Hello! Welcome to the AMS OSram skeleton project installer');
 
-  const { projectName, useMUI } = await prompts([
-    projectNamePrompt,
-    useMUIPrompt,
-  ]);
+  const { projectName } = await prompts({
+    type: 'text',
+    name: 'projectName',
+    message: 'Choose your project name:',
+  });
+
+  const { useMui } = await prompts({
+    type: 'select',
+    name: 'useMui',
+    message: 'Do you want to use Mui?',
+    choices: [
+      { title: 'Yes', value: true },
+      { title: 'No', value: false }
+    ]
+  });
 
   const rootPath = process.cwd();
   const projectPath = join(rootPath, projectName);
 
-  // ! Optional: install dependencies
-  const { installDeps } = await prompts(installDependenciesPrompt);
-  // ! Install dependencies if user agreed
-  if (installDeps) installDependencies(projectPath);
+  const depMui = useMui ? ',\n    "@mui/material": "^6.4.0",\n    "@mui/icons-material": "^6.4.0",\n    "@emotion/react": "^11.14.0",\n    "@emotion/styled": "^11.14.0"'
+  : '';
 
-  // ! Create folder for the project
   createFolder(rootPath, projectName);
-  const skeletonPath = join(rootPath, 'bin', 'skeleton');
+
+  const skeletonPath = join(rootPath, 'bin/skeleton');
+
   const props = {
     projectName,
-    useMUI,
-    scaffVersion: '1.0.0',
-    author: 'Ricardo',
-    authorEmail: 'ealoticopve@gmail.com',
-  };
-  copyFolder(skeletonPath, projectPath, props);
+    useMui,
+    depMui,
+    version: '1.0.0',
+    author: 'David Briceno and Valerio Goncalves',
+    authorEmail: 'david.briceno@ams-osram, valerio.goncalves-ext@ams-osram.com'
+  }
 
-  // ! Demonstrate colors and emojis
-  /*console.log(RED, 'This is red');
-  console.log(GREEN, 'This is green');
-  console.log(YELLOW, 'This is yellow');
-  console.log(BLUE, 'This is blue');
-  console.log(MAGENTA, 'This is magenta');
-  console.log(CYAN, 'This is cyan');
-  console.log(WHITE, 'This is white');
-  console.log(GRAY, 'This is gray');
-  console.log(ORANGE, 'This is orange');
+  installSkeleton(skeletonPath, projectPath, props);
 
-  // ! Mandatory reset at the end to avoid color bleeding in terminal
-  console.log(RESET_COLOR);
-
-  console.log('🎉 Party Emoji!');
-  console.log('⚠️ Warning Emoji');*/
+  console.log('Project created successfully!');
 };
 
 runCLI();
