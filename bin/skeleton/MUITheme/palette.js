@@ -1,129 +1,106 @@
-import { createTheme } from '@mui/material/styles';
-import { 
-  orange, 
-  grey, 
-  white, 
-  red, 
-  pink, 
-  purple, 
-  deepPurple, 
-  indigo, 
-  blue, 
-  lightBlue, 
-  cyan, 
-  teal, 
-  green, 
-  lightGreen, 
-  lime, 
-  yellow, 
-  amber, 
-  deepOrange, 
-  brown, 
-  blueGrey
-} from '@mui/material/colors';
+import colors from '@mui/material';
 
 export default colors = {
   palette: {
     primary: {
-        /* ORANGE */
-        light_orange: orange[200],
-        orange: orange[500],
-        dark_orange: orange[900],
+      /* ORANGE */
+      light_orange: colors.orange[200],
+      orange: colors.orange[500],
+      dark_orange: colors.orange[900],
 
-        /* GREY */
-        light_grey: grey[200],
-        grey: grey[500],
-        dark_grey: grey[900],
+      /* GREY */
+      light_grey: colors.grey[200],
+      grey: colors.grey[500],
+      dark_grey: colors.grey[900],
 
-        /* WHITE */
-        white: white[500],
+      /* WHITE */
+      white: colors.white[500],
     },
     secondary: {
+      /* RED */
+      light_red: colors.red[200],
+      red: colors.red[500],
+      dark_red: colors.red[900],
 
-        /* RED */
-        light_red: red[200],
-        red: red[500],
-        dark_red: red[900],
+      /* pink */
+      light_pink: colors.pink[200],
+      pink: colors.pink[500],
+      dark_pink: colors.pink[900],
 
-        /* pink */
-        light_pink: pink[200],
-        pink: pink[500],
-        dark_pink: pink[900],
+      /* purple */
+      light_purple: colors.purple[200],
+      purple: colors.purple[500],
+      dark_purple: colors.purple[900],
 
-        /* purple */
-        light_purple: purple[200],
-        purple: purple[500],
-        dark_purple: purple[900],
+      /* deepPurple */
+      light_deepPurple: colors.deepPurple[200],
+      deepPurple: colors.deepPurple[500],
+      dark_deepPurple: colors.deepPurple[900],
 
-        /* deepPurple */
-        light_deepPurple: deepPurple[200],
-        deepPurple: deepPurple[500],
-        dark_deepPurple: deepPurple[900],
+      /* indigo */
+      light_indigo: colors.indigo[200],
+      indigo: colors.indigo[500],
+      dark_indigo: colors.indigo[900],
 
-        /* indigo */
-        light_indigo: indigo[200],
-        indigo: indigo[500],
-        dark_indigo: indigo[900],
+      /* blue */
+      light_blue: colors.blue[200],
+      blue: colors.blue[500],
+      dark_blue: colors.blue[900],
 
-        /* blue */
-        light_blue: blue[200],
-        blue: blue[500],
-        dark_blue: blue[900],
+      /* lightBlue */
+      light_lightBlue: colors.lightBlue[200],
+      lightBlue: colors.lightBlue[500],
+      dark_lightBlue: colors.lightBlue[900],
 
-        /* lightBlue */
-        light_lightBlue: lightBlue[200],
-        lightBlue: lightBlue[500],
-        dark_lightBlue: lightBlue[900],
+      /* cyan */
+      light_cyan: colors.cyan[200],
+      cyan: colors.cyan[500],
+      dark_cyan: colors.cyan[900],
 
-        /* cyan */
-        light_cyan: cyan[200],
-        cyan: cyan[500],
-        dark_cyan: cyan[900],
+      /* teal */
+      light_teal: colors.teal[200],
+      teal: colors.teal[500],
+      dark_teal: colors.teal[900],
 
-        /* teal */
-        light_teal: teal[200],
-        teal: teal[500],
-        dark_teal: teal[900],
+      /* green */
+      light_green: colors.green[200],
+      green: colors.green[500],
+      dark_green: colors.green[900],
 
-        /* green */
-        light_green: green[200],
-        green: green[500],
-        dark_green: green[900],
+      /* lightGreen */
+      light_lightGreen: colors.lightGreen[200],
+      lightGreen: colors.lightGreen[500],
+      dark_lightGreen: colors.lightGreen[900],
 
-        /* lightGreen */
-        light_lightGreen: lightGreen[200],
-        lightGreen: lightGreen[500],
-        dark_lightGreen: lightGreen[900],
+      /* lime */
+      light_lime: colors.lime[200],
+      lime: colors.lime[500],
+      dark_lime: colors.lime[900],
 
-        /* lime */
-        light_lime: lime[200],
-        lime: lime[500],
-        dark_lime: lime[900],
+      /* yellow */
+      light_yellow: colors.yellow[200],
+      yellow: colors.yellow[500],
+      dark_yellow: colors.yellow[900],
 
-        /* yellow */
-        light_yellow: yellow[200],
-        yellow: yellow[500],
-        dark_yellow: yellow[900],
+      /* amber */
+      light_amber: colors.amber[200],
+      amber: colors.amber[500],
+      dark_amber: colors.amber[900],
 
-        /* amber */
-        light_amber: amber[200],
-        amber: amber[500],
-        dark_amber: amber[900],
+      /* deepOrange */
+      light_deepOrange: colors.deepOrange[200],
+      deepOrange: colors.deepOrange[500],
+      dark_deepOrange: colors.deepOrange[900],
 
-        /* deepOrange */
-        light_deepOrange: deepOrange[200],
-        deepOrange: deepOrange[500],
-        dark_deepOrange: deepOrange[900],
+      /* brown */
+      light_brown: colors.brown[200],
+      brown: colors.brown[500],
+      dark_brown: colors.brown[900],
 
-        /* brown */
-        light_brown: brown[200],
-        brown: brown[500],
-        dark_brown: brown[900],
-
-        /* blueGrey */
-        light_blueGrey: blueGrey[200],
-        blueGrey: blueGrey[500],
-        dark_blueGrey: blueGrey[900]
+      /* blueGrey */
+      light_blueGrey: colors.blueGrey[200],
+      blueGrey: colors.blueGrey[500],
+      dark_blueGrey: colors.blueGrey[900],
     },
   },
 };

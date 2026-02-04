@@ -1,7 +1,7 @@
 export const projectNamePrompt = {
   type: 'text',
   name: 'projectName',
-  message: 'Project name:',
+  message: '🪪 Choose your project name:',
 };
 export const useMUIPrompt = {
   type: 'toggle',

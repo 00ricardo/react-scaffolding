@@ -6,7 +6,7 @@ import store from '../redux/store';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import theme from '../MUITheme';
 const queryClient = new QueryClient();
-import Starterwrapper from './wrapper';
+import ApplicationWrapper from './ApplicationWrapper';
 
 export default {
   decorators: [
@@ -14,16 +14,11 @@ export default {
       return (
         <Provider store={store}>
           <QueryClientProvider client={queryClient}>
-            <SnackbarProvider maxSnack={10}>
+            <SnackbarProvider maxSnack={5}>
               <ThemeProvider theme={theme}>
-                <Starterwrapper
-                  user={''}
-                  baseURL={
-                    ''
-                  }
-                >
+                <ApplicationWrapper>
                   <Story />
-                </Starterwrapper>
+                </ApplicationWrapper>
               </ThemeProvider>
             </SnackbarProvider>
           </QueryClientProvider>

@@ -3,3 +3,4 @@
 
 // ! Sends APEX Session for ORDS Authentication
 export const authenticationPath = '/auth/validate-session';
+export const getUser = '/test/get-user';
